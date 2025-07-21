@@ -2,12 +2,14 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import { Box, TextField, Button, Typography, Container, Alert } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 const LoginPage: React.FC = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState<string | null>(null);
-    
+
+    const { login } = useAuth(); 
     const navigate = useNavigate();
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -24,26 +26,19 @@ const LoginPage: React.FC = () => {
         loginData.append('password', password);
 
         try {
-            // Send the POST request to the /login endpoint
-            const response = await axios.post('http://localhost:8080/login', loginData, {
+            await axios.post('http://localhost:8080/login', loginData, {
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
                 },
                 withCredentials: true 
             });
 
-            // On success, the backend will return our custom success message
-            if (response.status === 200) {
-                // For now, just log success and navigate home.
-                // In the next step, we'll update our AuthContext here.
-                console.log('Login Successful:', response.data);
-                navigate('/'); // Navigate to the homepage on successful login
-            }
+            // On success, update global state by calling the login function!
+            login({ username: username }); // Pass the user data to the context
+            navigate('/'); 
 
         } catch (err: any) {
-            // Handle login errors
             if (axios.isAxiosError(err) && err.response) {
-                // The backend returned a 401 Unauthorized status
                 setError(err.response.data.error || "Invalid username or password.");
             } else {
                 setError("Network Error or server is not responding.");
