@@ -1,21 +1,29 @@
-# BEASTTAILOR
-> Bespoke Gear for the Bold.
 
-Welcome to BeastTailor, where D&D meets high fashion! Style heroes with gear from brands like 'Shank & Bones'. A full-stack portfolio project built to showcase a fun concept with a solid tech foundation.
+### **Project Blueprint: BeastTailor**
 
+#### **1. High-Level Pitch & Concept**
 
----
+**BeastTailor** is a full-stack, fantasy-themed e-commerce web shop. The name is a direct play on "Bestseller," merging the fantasy world's **"Beast"** with the fashion world's **"Tailor."** The application provides a unified storefront for a universe of fictional fashion brands, each with a unique D&D-style racial identity. Users can purchase gear with unique stats, manage their collection in a personal profile, and equip items onto a character model to see their hero's look and aggregated stats come to life. The project's unique twist is a dynamic pricing "Affinity Roll" at checkout, making every purchase a fun, game-like experience.
 
-## ✨ Key Features
+#### **2. User Experience & Core Features**
 
-*   **Dynamic E-commerce Storefront:** A full shopping experience where users can browse a catalog, filter by brand or item type, and view detailed product pages.
-*   **Persistent User Profiles:** Registered users have a personal profile page that serves as their hub, logging a complete history of all their purchases in a "Wardrobe."
+The user journey mimics a modern e-commerce site, but with engaging D&D mechanics.
 
-*   **Live Character Stat System:** Equip gear from your Wardrobe onto your character model and watch as a "Live Stat Sheet" aggregates all stat bonuses in real-time.
+1.  **Browse the Shop:** The user explores a unified **Shop Catalog** featuring all the fantasy brands. They can filter by brand, item slot, and other criteria.
 
-*   **Interactive 'Affinity Roll' Checkout:** A unique, game-like checkout process where the final price is determined by a secure, server-side roll based on your character's race vs. the item's brand identity.
+2.  **Inspect Items:** Clicking an item opens a **Product Detail Page** showing high-quality images, its brand, D&D stats, special properties, and a "base price."
 
-## ⚔️ The World of BeastTailor: Brand Parodies
+3.  **Shopping Cart:** Users add desired items to a persistent **Shopping Cart**, managed via `useContext`.
+
+4.  **Checkout with Affinity Roll:** The checkout process is the core gameplay loop.
+    *   When the user proceeds to checkout, the backend triggers the **"Affinity Roll"** for all items in the cart.
+    *   This secure, server-side calculation determines a final, dynamic price based on the user's race, brand affinities, and a random D20 roll.
+
+5.  **Profile Page & Wardrobe:** After a successful "purchase," the items are added to the user's personal **Wardrobe** on their Profile Page. This page logs a complete history of all their purchases.
+
+6.  **Equip & Style:** The Profile Page features a persistent character model. The user can browse their Wardrobe and click items to **equip** them onto their character. As they do, the character's visual appearance and a **Live Stat Sheet** update in real-time.
+
+#### **3. Creative World-Building: The Brand Parodies**
 
 The shop's identity is built on clever parodies of BESTSELLER's brands, each with a defined racial identity that drives the stat system and pricing mechanics.
 
@@ -27,7 +35,13 @@ The shop's identity is built on clever parodies of BESTSELLER's brands, each wit
 | **Sected**         | **Selected Homme/Femme** | **Noble-Born:** Disciplined and honorable. Focuses on `WIS`/`AC` and commanding properties.                     |
 | **Signets**        | **Pieces**             | **Gnome-Forged:** Intricate and clever. Provides focused, single-skill bonuses (`+1 Perception`, etc.).           |
 
-## 🛠️ Tech Stack
+
+
+
+
+### **4. Technical Architecture**
+
+The **BeastTailor** project is built as a full-stack application, with each technology chosen to fulfill a specific, professional role.
 
 | Category               | Technology / Tool                    | Role & Purpose in the Project                                                                                                                                                                                                                                                                      |
 | :--------------------- | :----------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -37,4 +51,3 @@ The shop's identity is built on clever parodies of BESTSELLER's brands, each wit
 | **Database**           | `PostgreSQL`                         | A powerful relational database to persist all `user`, `item`, and `inventory` data.                                                                                                                                                                                                                      |
 | **API Type**           | `CRUD Operations`                    | The API fully implements CRUD (Create, Read, Update, Delete) to allow the frontend to manage all application resources like user profiles and inventories.                                                                                                                                                        |
 | **UI / Design System** | `Material-UI (MUI)`                  | A comprehensive component library used to rapidly build a clean, professional, and responsive user interface for the web shop.                                                                                                                                                                          |
-
