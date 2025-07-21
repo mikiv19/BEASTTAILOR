@@ -7,6 +7,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -20,15 +22,24 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+            // Add this to apply the CORS configuration we define below
+            .cors(cors -> cors.configurationSource(request -> {
+                CorsConfiguration configuration = new CorsConfiguration();
+                // Allow our frontend to connect
+                configuration.setAllowedOrigins(List.of("http://localhost:5173"));
+                // Allow common HTTP methods
+                configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+                // Allow all headers
+                configuration.setAllowedHeaders(List.of("*"));
+                // Allow credentials (e.g., cookies)
+                configuration.setAllowCredentials(true);
+                return configuration;
+            }))
             .csrf(csrf -> csrf.disable())
-            
             .authorizeHttpRequests(auth -> auth
-                // Allow unauthenticated access to our health check and registration endpoints
                 .requestMatchers("/api/health", "/api/auth/register").permitAll()
-                // Secure all other endpoints
                 .anyRequest().authenticated()
             )
-            // Use default form login for now
             .formLogin(form -> form.permitAll());
 
         return http.build();
