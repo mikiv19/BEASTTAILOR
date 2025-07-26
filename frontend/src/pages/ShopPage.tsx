@@ -3,25 +3,8 @@ import axios from 'axios';
 import { Grid, Card, CardMedia, CardContent, Typography, CircularProgress, 
         Box, Alert, Container } from '@mui/material';
 import { Link } from 'react-router-dom'; 
+import type { ClothingItem } from '../types'
 
-interface ClothingItem {
-    id: number;
-    name: string;
-    description: string;
-    brand: string;
-    basePrice: number;
-    itemSlot: string;
-    imageUrlThumbnail: string;
-    imageUrlDetail: string;
-    strBonus: number;
-    dexBonus: number;
-    conBonus: number;
-    intBonus: number;
-    wisBonus: number;
-    chaBonus: number;
-    acBonus: number;
-    specialProperties: string | null;
-}
 
 const ShopPage: React.FC = () => {
     const [items, setItems] = useState<ClothingItem[]>([]);
@@ -66,7 +49,7 @@ const ShopPage: React.FC = () => {
             
             <Grid container spacing={4}>
                 {items.map((item) => (
-                    <Grid item key={item.id} xs={12} sm={6} md={4}>
+                    <Grid key={item.id} xs={12} sm={6} md={4}>
                         <Link to={`/item/${item.id}`} style={{ textDecoration: 'none' }}>
                             <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
                                 <CardMedia

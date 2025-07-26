@@ -1,34 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link as RouterLink } from 'react-router-dom';
 import axios from 'axios';
-import { 
-    Container, 
-    Typography, 
-    Box, 
-    CircularProgress, 
-    Alert, 
-    Grid, 
-    Paper,
-    Button 
-} from '@mui/material';
+import { Container, Typography, Box, CircularProgress, Alert, Grid, Paper,Button } from '@mui/material';
+import type { ClothingItem } from '../types'
+import { useCart } from '../context/CartContext'; 
 
-interface ClothingItem {
-    id: number;
-    name: string;
-    description: string;
-    brand: string;
-    basePrice: number;
-    itemSlot: string;
-    imageUrlDetail: string;
-    strBonus: number;
-    dexBonus: number;
-    conBonus: number;
-    intBonus: number;
-    wisBonus: number;
-    chaBonus: number;
-    acBonus: number;
-    specialProperties: string | null;
-}
 
 const ItemDetailPage: React.FC = () => {
     // useParams hook gets the 'id' from the URL (e.g., /item/1)
@@ -36,6 +12,7 @@ const ItemDetailPage: React.FC = () => {
     const [item, setItem] = useState<ClothingItem | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
+    const { addToCart } = useCart();
 
     useEffect(() => {
         if (!id) return;
@@ -78,7 +55,7 @@ const ItemDetailPage: React.FC = () => {
             </Button>
             <Paper elevation={3} sx={{ p: 4 }}>
                 <Grid container spacing={4}>
-                    <Grid item xs={12} md={6}>
+                    <Grid xs={12} md={6}>
                         <Box
                             component="img"
                             src={item.imageUrlDetail} // Use the larger detail image
@@ -86,7 +63,7 @@ const ItemDetailPage: React.FC = () => {
                             sx={{ width: '100%', height: 'auto', borderRadius: 2 }}
                         />
                     </Grid>
-                    <Grid item xs={12} md={6}>
+                    <Grid xs={12} md={6}>
                         <Typography variant="h3" component="h1" gutterBottom>
                             {item.name}
                         </Typography>
@@ -110,7 +87,7 @@ const ItemDetailPage: React.FC = () => {
                             {item.chaBonus > 0 && <Typography>+ {item.chaBonus} Charisma</Typography>}
                             {item.specialProperties && <Typography><i>{item.specialProperties}</i></Typography>}
                         </Box>
-                        <Button variant="contained" color="primary" size="large" sx={{ mt: 4 }}>
+                        <Button variant="contained" color="primary" size="large" sx={{ mt: 4 }} onClick={() => addToCart(item)}>
                             Add to Cart
                         </Button>
                     </Grid>

@@ -1,5 +1,3 @@
-// File: backend/src/main/java/com/beasttailor/api/model/ClothingItem.java
-
 package com.beasttailor.api.model;
 
 import jakarta.persistence.*;

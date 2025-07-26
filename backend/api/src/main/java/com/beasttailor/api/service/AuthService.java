@@ -1,6 +1,8 @@
 package com.beasttailor.api.service;
 
+import com.beasttailor.api.model.Cart;
 import com.beasttailor.api.model.User;
+import com.beasttailor.api.repository.CartRepository;
 import com.beasttailor.api.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -11,10 +13,12 @@ public class AuthService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final CartRepository cartRepository;
 
-    public AuthService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public AuthService(UserRepository userRepository, PasswordEncoder passwordEncoder,  CartRepository cartRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.cartRepository = cartRepository; 
     }
 
     @Transactional
@@ -28,8 +32,13 @@ public class AuthService {
         User newUser = new User();
         newUser.setUsername(username);
         newUser.setPassword(encodedPassword);
-        // The role defaults to USER.
 
-        return userRepository.save(newUser);
+        User savedUser = userRepository.save(newUser);
+        
+        Cart newCart = new Cart();
+        newCart.setUser(savedUser);
+        cartRepository.save(newCart);
+
+        return savedUser;
     }
 }
