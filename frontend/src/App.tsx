@@ -4,6 +4,7 @@ import HomePage from './pages/HomePage';
 import RegisterPage from './pages/RegisterPage';
 import LoginPage from './pages/LoginPage';
 import ShopPage from './pages/ShopPage';
+import ItemDetailPage from './pages/ItemDetailPage';
 import { Container, Button, Box, Typography } from '@mui/material';
 import { useAuth } from './context/AuthContext';
 
@@ -53,6 +54,7 @@ const App: React.FC = () => {
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/shop" element={<ShopPage />} /> 
+        <Route path="/item/:id" element={<ItemDetailPage />} /> 
       </Routes>
     </Container>
   );

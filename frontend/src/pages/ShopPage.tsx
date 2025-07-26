@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Grid, Card, CardMedia, CardContent, Typography, CircularProgress, 
         Box, Alert, Container } from '@mui/material';
+import { Link } from 'react-router-dom'; 
 
 interface ClothingItem {
     id: number;
@@ -62,29 +63,32 @@ const ShopPage: React.FC = () => {
             <Typography variant="h4" component="h1" gutterBottom align="center">
                 The BeastTailor Catalog
             </Typography>
+            
             <Grid container spacing={4}>
                 {items.map((item) => (
                     <Grid item key={item.id} xs={12} sm={6} md={4}>
-                        <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-                            <CardMedia
-                                component="img"
-                                height="250"
-                                image={item.imageUrlThumbnail}
-                                alt={item.name}
-                                sx={{ p: 1, objectFit: 'contain' }}
-                            />
-                            <CardContent sx={{ flexGrow: 1 }}>
-                                <Typography gutterBottom variant="h5" component="div">
-                                    {item.name}
-                                </Typography>
-                                <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-                                    {item.brand}
-                                </Typography>
-                                <Typography variant="h6" component="p">
-                                    {item.basePrice.toFixed(2)} GP
-                                </Typography>
-                            </CardContent>
-                        </Card>
+                        <Link to={`/item/${item.id}`} style={{ textDecoration: 'none' }}>
+                            <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+                                <CardMedia
+                                    component="img"
+                                    height="250"
+                                    image={item.imageUrlThumbnail}
+                                    alt={item.name}
+                                    sx={{ p: 1, objectFit: 'contain' }}
+                                />
+                                <CardContent sx={{ flexGrow: 1 }}>
+                                    <Typography gutterBottom variant="h5" component="div" color="text.primary">
+                                        {item.name}
+                                    </Typography>
+                                    <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+                                        {item.brand}
+                                    </Typography>
+                                    <Typography variant="h6" component="p" color="text.primary">
+                                        {item.basePrice.toFixed(2)} GP
+                                    </Typography>
+                                </CardContent>
+                            </Card>
+                        </Link>
                     </Grid>
                 ))}
             </Grid>
