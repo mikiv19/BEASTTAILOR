@@ -3,6 +3,7 @@ import { Routes, Route, Link, useNavigate } from 'react-router-dom';
 import HomePage from './pages/HomePage';
 import RegisterPage from './pages/RegisterPage';
 import LoginPage from './pages/LoginPage';
+import ShopPage from './pages/ShopPage';
 import { Container, Button, Box, Typography } from '@mui/material';
 import { useAuth } from './context/AuthContext';
 
@@ -39,6 +40,9 @@ const App: React.FC = () => {
               <Button component={Link} to="/register" variant="contained">
                 Register
               </Button>
+              <Button component={Link} to="/shop">
+                Shop
+              </Button>
             </>
           )}
         </nav>
@@ -48,6 +52,7 @@ const App: React.FC = () => {
         <Route path="/" element={<HomePage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/shop" element={<ShopPage />} /> 
       </Routes>
     </Container>
   );

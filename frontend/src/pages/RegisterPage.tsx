@@ -32,11 +32,11 @@ const RegisterPage: React.FC = () => {
             // Handle success
             setSuccess(response.data.message || 'User registered successfully!');
             
-            // Optionally, clear form fields on success
+            
             setUsername('');
             setPassword('');
 
-            // Navigate to the login page after a short delay
+            // Navigate to the login page
             setTimeout(() => {
                 navigate('/'); 
             }, 2000);
@@ -89,8 +89,7 @@ const RegisterPage: React.FC = () => {
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                     />
-                    
-                    {/* Display error or success messages */}
+
                     {error && <Alert severity="error" sx={{ width: '100%', mt: 2 }}>{error}</Alert>}
                     {success && <Alert severity="success" sx={{ width: '100%', mt: 2 }}>{success}</Alert>}
 
