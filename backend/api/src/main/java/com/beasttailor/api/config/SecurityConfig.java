@@ -39,7 +39,7 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
                 // Allow unauthenticated access to health check and auth endpoints
-                .requestMatchers("/api/health", "/api/auth/**", "/login").permitAll()
+                .requestMatchers("/api/health", "/api/items", "/api/auth/**", "/login").permitAll()
                 .anyRequest().authenticated()
             )
             // Configure form login for our API

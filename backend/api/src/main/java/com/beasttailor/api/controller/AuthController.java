@@ -27,20 +27,16 @@ public class AuthController {
                 registrationRequest.getUsername(),
                 registrationRequest.getPassword()
             );
-            // On success, return a 201 Created status with a success message
+            // On success, return a 201
             return ResponseEntity.status(HttpStatus.CREATED).body("User registered successfully!");
         } catch (IllegalStateException e) {
-            // If the username already exists, return a 409 Conflict status
+            // If the username already exists, return a 409
             return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
         } catch (Exception e) {
-            // For any other unexpected errors, return a 500 Internal Server Error
+            // For any other unexpected errors, return a 500
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred.");
         }
     }
-
-    /**
-     * A simple DTO (Data Transfer Object) class to map the incoming JSON request body.
-     */
     
     @Data
     private static class RegistrationRequest {

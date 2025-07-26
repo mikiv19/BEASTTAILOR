@@ -1,5 +1,3 @@
-
-
 package com.beasttailor.api.repository;
 
 import com.beasttailor.api.model.User;
