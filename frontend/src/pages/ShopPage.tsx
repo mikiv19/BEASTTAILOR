@@ -49,7 +49,8 @@ const ShopPage: React.FC = () => {
             
             <Grid container spacing={4}>
                 {items.map((item) => (
-                    <Grid key={item.id} xs={12} sm={6} md={4}>
+                    
+                    <Grid key={item.id} size={{ xs: 12, sm: 6, md: 4 }}>
                         <Link to={`/item/${item.id}`} style={{ textDecoration: 'none' }}>
                             <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
                                 <CardMedia
