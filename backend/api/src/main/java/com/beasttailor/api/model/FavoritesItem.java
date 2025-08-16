@@ -7,15 +7,15 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @Entity
-@Table(name = "cart_items")
-public class CartItem {
+@Table(name = "favorite_items")
+public class FavoriteItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "cart_id", nullable = false)
-    private Cart cart;
+    @JoinColumn(name = "favorites_list_id", nullable = false)
+    private FavoriteItem favoritesList;
 
     @ManyToOne
     @JoinColumn(name = "clothing_item_id", nullable = false)
@@ -24,8 +24,8 @@ public class CartItem {
     @Column(nullable = false)
     private int quantity;
     
-    public CartItem(Cart cart, ClothingItem clothingItem, int quantity) {
-        this.cart = cart;
+    public FavoriteItem(Favorite favorite, ClothingItem clothingItem, int quantity) {
+        this.favorite = favorite;
         this.clothingItem = clothingItem;
         this.quantity = quantity;
     }

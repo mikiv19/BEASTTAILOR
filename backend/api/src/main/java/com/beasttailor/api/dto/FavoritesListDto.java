@@ -1,7 +1,7 @@
 package com.beasttailor.api.dto;
 import java.util.List;
 
-public record CartDto(
+public record FavoriteDto(
     Long id,
-    List<CartItemDto> items
+    List<FavoriteItemDto> items
 ) {}

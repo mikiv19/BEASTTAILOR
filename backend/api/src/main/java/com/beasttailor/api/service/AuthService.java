@@ -1,8 +1,8 @@
 package com.beasttailor.api.service;
 
-import com.beasttailor.api.model.Cart;
+import com.beasttailor.api.model.Favorite;
 import com.beasttailor.api.model.User;
-import com.beasttailor.api.repository.CartRepository;
+import com.beasttailor.api.repository.FavoriteRepository;
 import com.beasttailor.api.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -13,12 +13,12 @@ public class AuthService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    private final CartRepository cartRepository;
+    private final FavoriteRepository favoriteRepository;
 
-    public AuthService(UserRepository userRepository, PasswordEncoder passwordEncoder,  CartRepository cartRepository) {
+    public AuthService(UserRepository userRepository, PasswordEncoder passwordEncoder,  FavoriteRepository favoriteRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
-        this.cartRepository = cartRepository; 
+        this.favoriteRepository = favoriteRepository; 
     }
 
     @Transactional
@@ -35,9 +35,9 @@ public class AuthService {
 
         User savedUser = userRepository.save(newUser);
         
-        Cart newCart = new Cart();
-        newCart.setUser(savedUser);
-        cartRepository.save(newCart);
+        Favorite newFavorite = new Favorite();
+        newFavorite.setUser(savedUser);
+        favoriteRepository.save(newFavorite);
 
         return savedUser;
     }

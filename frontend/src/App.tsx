@@ -7,8 +7,8 @@ import ShopPage from './pages/ShopPage';
 import ItemDetailPage from './pages/ItemDetailPage';
 import { Container, Button, Box, Typography } from '@mui/material';
 import { useAuth } from './context/AuthContext';
-import CartIcon from './components/CartIcon';
-import CartDrawer from './components/CartDrawer';
+import CartIcon from './components/FavoriteIcon';
+import CartDrawer from './components/FavoriteDrawer';
 
 const App: React.FC = () => {
     const { isAuthenticated, user, logout } = useAuth();

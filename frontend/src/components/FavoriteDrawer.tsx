@@ -1,45 +1,45 @@
 import React from 'react';
 import { Drawer, Box, Typography, List, ListItem, ListItemText, Button, Divider, IconButton } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { useCart } from '../context/CartContext';
+import { useFavorite } from '../context/FavoriteContext';
 
-interface CartDrawerProps {
+interface FavoriteDrawerProps {
     open: boolean;
     onClose: () => void;
 }
 
-const CartDrawer: React.FC<CartDrawerProps> = ({ open, onClose }) => {
-    const { cartItems, removeFromCart } = useCart();
-    const totalPrice = cartItems.reduce((total, cartItem) => 
-        total + cartItem.clothingItem.basePrice * cartItem.quantity, 0);
+const FavoriteDrawer: React.FC<FavoriteDrawerProps> = ({ open, onClose }) => {
+    const { favoriteItems, removeFromFavorite } = useFavorite();
+    const totalPrice = favoriteItems.reduce((total, favoriteItem) => 
+        total + favoriteItem.clothingItem.basePrice * favoriteItem.quantity, 0);
 
     return (
         <Drawer anchor="right" open={open} onClose={onClose}>
             <Box sx={{ width: 350, padding: 2 }} role="presentation">
-                <Typography variant="h5" sx={{ mb: 2 }}>Your Cart</Typography>
+                <Typography variant="h5" sx={{ mb: 2 }}>Your Favorite</Typography>
                 <Divider />
                 
-                {cartItems.length === 0 ? (
-                    <Typography sx={{ mt: 2 }}>Your cart is empty.</Typography>
+                {favoriteItems.length === 0 ? (
+                    <Typography sx={{ mt: 2 }}>Your favorite is empty.</Typography>
                 ) : (
                     <List>
-                        {cartItems.map(cartItem => (
+                        {favoriteItems.map(favoriteItem => (
                             <ListItem 
-                                key={cartItem.id} 
+                                key={favoriteItem.id} 
                                 disableGutters
                                 secondaryAction={
                                     <IconButton 
                                         edge="end" 
                                         aria-label="delete" 
-                                        onClick={() => removeFromCart(cartItem.id)}
+                                        onClick={() => removeFromFavorite(favoriteItem.id)}
                                     >
                                         <DeleteIcon />
                                     </IconButton>
                                 }
                             >
                                 <ListItemText
-                                    primary={`${cartItem.clothingItem.name} (x${cartItem.quantity})`}
-                                    secondary={`${(cartItem.clothingItem.basePrice * cartItem.quantity).toFixed(2)} GP`}
+                                    primary={`${favoriteItem.clothingItem.name} (x${favoriteItem.quantity})`}
+                                    secondary={`${(favoriteItem.clothingItem.basePrice * favoriteItem.quantity).toFixed(2)} GP`}
                                 />
                             </ListItem>
                         ))}
@@ -55,7 +55,7 @@ const CartDrawer: React.FC<CartDrawerProps> = ({ open, onClose }) => {
                     fullWidth 
                     sx={{ mt: 2 }}
                     onClick={() => alert('Checkout is not implemented yet!')}
-                    disabled={cartItems.length === 0}
+                    disabled={favoriteItems.length === 0}
                 >
                     Proceed to Checkout
                 </Button>
@@ -64,4 +64,4 @@ const CartDrawer: React.FC<CartDrawerProps> = ({ open, onClose }) => {
     );
 };
 
-export default CartDrawer;
+export default FavoriteDrawer;
