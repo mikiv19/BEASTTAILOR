@@ -7,13 +7,17 @@ import ShopPage from './pages/ShopPage';
 import ItemDetailPage from './pages/ItemDetailPage';
 import { Container, Button, Box, Typography } from '@mui/material';
 import { useAuth } from './context/AuthContext';
-import CartIcon from './components/FavoriteIcon';
-import CartDrawer from './components/FavoriteDrawer';
+import CartIcon from './components/CartIcon';
+import CartDrawer from './components/CartDrawer';
+import FavoritesIcon from './components/FavoriteIcon';
+import FavoritesDrawer from './components/FavoriteDrawer';
 
 const App: React.FC = () => {
     const { isAuthenticated, user, logout } = useAuth();
     const navigate = useNavigate();
+    
     const [isCartOpen, setIsCartOpen] = useState(false);
+    const [isFavoritesOpen, setIsFavoritesOpen] = useState(false);
 
     const handleLogout = () => {
         logout();
@@ -28,6 +32,7 @@ const App: React.FC = () => {
                 </Typography>
                 <nav>
                     <Button component={Link} to="/shop">Shop</Button>
+                    
                     {isAuthenticated ? (
                         <>
                             <Typography component="span" sx={{ mx: 2 }}>
@@ -36,7 +41,7 @@ const App: React.FC = () => {
                             <Button variant="outlined" onClick={handleLogout} sx={{ mr: 1 }}>
                                 Logout
                             </Button>
-                            <CartIcon onClick={() => setIsCartOpen(true)} />
+                            <FavoritesIcon onClick={() => setIsFavoritesOpen(true)} />
                         </>
                     ) : (
                         <>
@@ -48,10 +53,13 @@ const App: React.FC = () => {
                             </Button>
                         </>
                     )}
+                    <CartIcon onClick={() => setIsCartOpen(true)} />
                 </nav>
             </Box>
             <hr />
+
             <CartDrawer open={isCartOpen} onClose={() => setIsCartOpen(false)} />
+            {isAuthenticated && <FavoritesDrawer open={isFavoritesOpen} onClose={() => setIsFavoritesOpen(false)} />}
 
             <Routes>
                 <Route path="/" element={<HomePage />} />
