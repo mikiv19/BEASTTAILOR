@@ -2,6 +2,7 @@ import React from 'react';
 import { Drawer, Box, Typography, List, ListItem, ListItemText, Button, Divider, IconButton } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useLocalCart } from '../context/LocalCartContext';
+import { Link as RouterLink } from 'react-router-dom';
 
 interface CartDrawerProps {
     open: boolean;
@@ -37,7 +38,15 @@ const CartDrawer: React.FC<CartDrawerProps> = ({ open, onClose }) => {
                         <Typography variant="h6">Total: {totalPrice.toFixed(2)} GP</Typography>
                     </List>
                 )}
-                <Button variant="contained" fullWidth sx={{ mt: 2 }} disabled={cartItemCount === 0}>
+                <Button 
+                    variant="contained" 
+                    fullWidth 
+                    sx={{ mt: 2 }} 
+                    disabled={cartItemCount === 0}
+                    component={RouterLink}
+                    to="/checkout"
+                    onClick={onClose}
+                >
                     Proceed to Checkout
                 </Button>
             </Box>

@@ -1,4 +1,5 @@
 package com.beasttailor.api.dto;
+
 import java.util.List;
 
 public record FavoritesListDto(

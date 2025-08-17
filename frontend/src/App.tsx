@@ -1,11 +1,18 @@
 import React, { useState } from 'react';
 import { Routes, Route, Link, useNavigate } from 'react-router-dom';
+
+
 import HomePage from './pages/HomePage';
 import RegisterPage from './pages/RegisterPage';
 import LoginPage from './pages/LoginPage';
 import ShopPage from './pages/ShopPage';
 import ItemDetailPage from './pages/ItemDetailPage';
+import ProfilePage from './pages/ProfilePage'; 
+import CheckoutPage from './pages/CheckoutPage';
+
 import { Container, Button, Box, Typography } from '@mui/material';
+
+
 import { useAuth } from './context/AuthContext';
 import CartIcon from './components/CartIcon';
 import CartDrawer from './components/CartDrawer';
@@ -30,11 +37,15 @@ const App: React.FC = () => {
                 <Typography variant="h6" component={Link} to="/" sx={{ textDecoration: 'none', color: 'inherit' }}>
                     BeastTailor
                 </Typography>
-                <nav>
+                <nav style={{ display: 'flex', alignItems: 'center' }}>
                     <Button component={Link} to="/shop">Shop</Button>
                     
                     {isAuthenticated ? (
                         <>
+
+                            <Button component={Link} to="/profile" sx={{ ml: 1 }}> 
+                                Profile
+                            </Button>
                             <Typography component="span" sx={{ mx: 2 }}>
                                 Welcome, {user?.username}!
                             </Typography>
@@ -67,6 +78,8 @@ const App: React.FC = () => {
                 <Route path="/item/:id" element={<ItemDetailPage />} />
                 <Route path="/register" element={<RegisterPage />} />
                 <Route path="/login" element={<LoginPage />} />
+                <Route path="/profile" element={<ProfilePage />} />
+                <Route path="/checkout" element={<CheckoutPage />} />
             </Routes>
         </Container>
     );
