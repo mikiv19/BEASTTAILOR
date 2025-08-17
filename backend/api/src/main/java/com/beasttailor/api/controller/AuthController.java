@@ -1,14 +1,15 @@
 package com.beasttailor.api.controller;
 
-import com.beasttailor.api.model.User;
-import com.beasttailor.api.service.AuthService;
-import lombok.Data;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.beasttailor.api.service.AuthService;
+
+import lombok.Data;
 
 @RestController
 @RequestMapping("/api/auth") 
@@ -23,10 +24,10 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@RequestBody RegistrationRequest registrationRequest) {
         try {
-            User newUser = authService.registerUser(
-                registrationRequest.getUsername(),
-                registrationRequest.getPassword()
-            );
+            authService.registerUser(
+            registrationRequest.getUsername(),
+            registrationRequest.getPassword()
+);
             // On success, return a 201
             return ResponseEntity.status(HttpStatus.CREATED).body("User registered successfully!");
         } catch (IllegalStateException e) {
@@ -39,7 +40,7 @@ public class AuthController {
     }
     
     @Data
-    private static class RegistrationRequest {
+    public static class RegistrationRequest {
         private String username;
         private String password;
     }

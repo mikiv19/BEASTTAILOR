@@ -1,6 +1,13 @@
 package com.beasttailor.api.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -15,7 +22,7 @@ public class FavoriteItem {
 
     @ManyToOne
     @JoinColumn(name = "favorites_list_id", nullable = false)
-    private FavoriteItem favoritesList;
+    private FavoritesList favoritesList;
 
     @ManyToOne
     @JoinColumn(name = "clothing_item_id", nullable = false)
@@ -24,8 +31,8 @@ public class FavoriteItem {
     @Column(nullable = false)
     private int quantity;
     
-    public FavoriteItem(Favorite favorite, ClothingItem clothingItem, int quantity) {
-        this.favorite = favorite;
+    public FavoriteItem(FavoritesList favoritesList, ClothingItem clothingItem, int quantity) {
+        this.favoritesList = favoritesList;
         this.clothingItem = clothingItem;
         this.quantity = quantity;
     }

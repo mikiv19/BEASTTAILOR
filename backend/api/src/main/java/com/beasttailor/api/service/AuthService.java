@@ -1,24 +1,25 @@
 package com.beasttailor.api.service;
 
-import com.beasttailor.api.model.Favorite;
-import com.beasttailor.api.model.User;
-import com.beasttailor.api.repository.FavoriteRepository;
-import com.beasttailor.api.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.beasttailor.api.model.FavoritesList;
+import com.beasttailor.api.model.User;
+import com.beasttailor.api.repository.FavoritesListRepository;
+import com.beasttailor.api.repository.UserRepository;
 
 @Service
 public class AuthService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    private final FavoriteRepository favoriteRepository;
+    private final FavoritesListRepository favoritesListRepository;
 
-    public AuthService(UserRepository userRepository, PasswordEncoder passwordEncoder,  FavoriteRepository favoriteRepository) {
+    public AuthService(UserRepository userRepository, PasswordEncoder passwordEncoder, FavoritesListRepository favoritesListRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
-        this.favoriteRepository = favoriteRepository; 
+        this.favoritesListRepository = favoritesListRepository;
     }
 
     @Transactional
@@ -28,16 +29,15 @@ public class AuthService {
         }
 
         String encodedPassword = passwordEncoder.encode(rawPassword);
-
         User newUser = new User();
         newUser.setUsername(username);
         newUser.setPassword(encodedPassword);
-
-        User savedUser = userRepository.save(newUser);
         
-        Favorite newFavorite = new Favorite();
-        newFavorite.setUser(savedUser);
-        favoriteRepository.save(newFavorite);
+        User savedUser = userRepository.save(newUser);
+
+        FavoritesList newFavoritesList = new FavoritesList();
+        newFavoritesList.setUser(savedUser);
+        favoritesListRepository.save(newFavoritesList);
 
         return savedUser;
     }

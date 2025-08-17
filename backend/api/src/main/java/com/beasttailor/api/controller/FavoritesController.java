@@ -1,54 +1,64 @@
 package com.beasttailor.api.controller;
 
-import com.beasttailor.api.dto.FavoriteDto;
-import com.beasttailor.api.service.FavoriteService;
-import lombok.Data;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.beasttailor.api.dto.FavoritesListDto;
+import com.beasttailor.api.service.FavoritesService;
+
+import lombok.Data;
 
 @RestController
-@RequestMapping("/api/favorite")
-public class FavoriteController {
+@RequestMapping("/api/favorites")
+public class FavoritesController {
 
-    private final FavoriteService favoriteService;
+    private final FavoritesService favoritesService;
 
-    public FavoriteController(FavoriteService favoriteService) {
-        this.favoriteService = favoriteService;
+    public FavoritesController(FavoritesService favoritesService) {
+        this.favoritesService = favoritesService;
     }
 
     @GetMapping
-    public ResponseEntity<FavoriteDto> getUserFavorite(@AuthenticationPrincipal UserDetails userDetails) {
-        FavoriteDto favoriteDto = favoriteService.getFavoriteForUser(userDetails.getUsername());
-        return ResponseEntity.ok(favoriteDto);
+    public ResponseEntity<FavoritesListDto> getUserFavorites(@AuthenticationPrincipal UserDetails userDetails) {
+        FavoritesListDto favoritesListDto = favoritesService.getFavoritesForUser(userDetails.getUsername());
+        return ResponseEntity.ok(favoritesListDto);
     }
 
     @PostMapping("/items")
-    public ResponseEntity<FavoriteDto> addItemToFavorite(
+    public ResponseEntity<FavoritesListDto> addItemToFavorites(
             @AuthenticationPrincipal UserDetails userDetails,
             @RequestBody AddItemRequest request
     ) {
-        FavoriteDto updatedFavoriteDto = favoriteService.addItemToFavorite(
+        FavoritesListDto updatedFavoritesListDto = favoritesService.addItemToFavorites(
                 userDetails.getUsername(),
                 request.getItemId(),
                 request.getQuantity()
         );
-        return ResponseEntity.ok(updatedFavoriteDto);
+        return ResponseEntity.ok(updatedFavoritesListDto);
     }
 
     @DeleteMapping("/items/{favoriteItemId}")
-    public ResponseEntity<FavoriteDto> removeItemFromFavorite(@AuthenticationPrincipal UserDetails userDetails,
-        @PathVariable Long favoriteItemId) {
-            FavoriteDto updatedFavoriteDto = favoriteService.removeItemFromFavorite(
+    public ResponseEntity<FavoritesListDto> removeItemFromFavorites(
+            @AuthenticationPrincipal UserDetails userDetails,
+            @PathVariable Long favoriteItemId
+    ) {
+        FavoritesListDto updatedFavoritesListDto = favoritesService.removeItemFromFavorites(
             userDetails.getUsername(),
             favoriteItemId
-                );
-        return ResponseEntity.ok(updatedFavoriteDto);
-}
+        );
+        return ResponseEntity.ok(updatedFavoritesListDto);
+    }
 
     @Data
-    private static class AddItemRequest {
+    public static class AddItemRequest {
         private Long itemId;
         private int quantity;
     }
