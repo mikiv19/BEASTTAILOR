@@ -1,8 +1,9 @@
-import axios from 'axios';
 import React, { useState } from 'react';
 import { Box, TextField, Button, Typography, Container, Alert } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import apiClient from '../api/axiosConfig';
+import { isAxiosError } from 'axios';
 
 const LoginPage: React.FC = () => {
     const [username, setUsername] = useState('');
@@ -26,20 +27,18 @@ const LoginPage: React.FC = () => {
         loginData.append('password', password);
 
         try {
-            await axios.post('http://localhost:8080/login', loginData, {
+            await apiClient.post('/login', loginData, {
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                withCredentials: true 
+                }
             });
 
-            // On success, update global state by calling the login function!
-            login({ username: username }); // Pass the user data to the context
+            login({ username: username });
             navigate('/'); 
 
         } catch (err: any) {
-            if (axios.isAxiosError(err) && err.response) {
-                setError(err.response.data.error || "Invalid username or password.");
+            if (isAxiosError(err)) {
+                setError("Invalid username or password.");
             } else {
                 setError("Network Error or server is not responding.");
             }

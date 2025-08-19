@@ -2,6 +2,7 @@ package com.beasttailor.api.service;
 
 import java.util.List;
 
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -46,7 +47,7 @@ public class WardrobeService {
         for (Long itemId : itemIds) {
             ClothingItem itemToAdd = clothingItemRepository.findById(itemId)
                     .orElseThrow(() -> new IllegalArgumentException("Cannot purchase item with ID " + itemId + ": not found."));
-            
+
             WardrobeItem newWardrobeItem = new WardrobeItem(wardrobe, itemToAdd);
             wardrobe.getItems().add(newWardrobeItem);
         }
@@ -55,10 +56,14 @@ public class WardrobeService {
     }
 
     @Transactional
-    public WardrobeItem setItemEquippedStatus(Long itemId, boolean isEquipped) {
+    public WardrobeItem setItemEquippedStatus(Long itemId, boolean isEquipped, String username) {
         WardrobeItem item = wardrobeItemRepository.findById(itemId)
                 .orElseThrow(() -> new EntityNotFoundException("WardrobeItem not found with id: " + itemId));
-        
+
+        if (!item.getWardrobe().getUser().getUsername().equals(username)) {
+            throw new AccessDeniedException("You do not have permission to modify this item.");
+        }
+    
         item.setEquipped(isEquipped);
 
         return wardrobeItemRepository.save(item);

@@ -1,31 +1,26 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { Grid, Card, CardMedia, CardContent, Typography, CircularProgress, 
-        Box, Alert, Container } from '@mui/material';
-import { Link, useSearchParams } from 'react-router-dom'; // Import useSearchParams
+import apiClient from '../api/axiosConfig';
+import { Grid, Card, CardMedia, CardContent, Typography, CircularProgress, Box, Alert, Container } from '@mui/material';
+import { Link, useSearchParams } from 'react-router-dom';
 import type { ClothingItem } from '../types';
-
 
 const ShopPage: React.FC = () => {
     const [items, setItems] = useState<ClothingItem[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
-    const [searchParams] = useSearchParams(); // Hook to read URL query parameters
+    const [searchParams] = useSearchParams(); 
 
     useEffect(() => {
         const fetchItems = async () => {
-            // Check if a 'brand' parameter exists in the URL (e.g., /shop?brand=ONYX)
             const brand = searchParams.get('brand');
-            
-            // Build the API URL dynamically. If a brand is present, add it as a query parameter.
-            let apiUrl = 'http://localhost:8080/api/items';
+            let apiUrl = '/api/items';
             if (brand) {
                 apiUrl += `?brand=${encodeURIComponent(brand)}`;
             }
 
             try {
                 setLoading(true);
-                const response = await axios.get<ClothingItem[]>(apiUrl); // Use the dynamic URL
+                const response = await apiClient.get<ClothingItem[]>(apiUrl);
                 setItems(response.data);
             } catch (err) {
                 setError('Failed to fetch items from the shop. The armory might be closed!');
@@ -36,7 +31,7 @@ const ShopPage: React.FC = () => {
         };
 
         fetchItems();
-    }, [searchParams]); // Re-run this effect whenever the URL search parameters change
+    }, [searchParams]);
 
     if (loading) {
         return (
@@ -52,7 +47,7 @@ const ShopPage: React.FC = () => {
 
     return (
         <Container sx={{ mt: 4, mb: 4 }}>
-            <Grid container spacing={4}>
+            <Grid container spacing={4} sx={{ mt: 2 }}>
                 {items.map((item) => (
                     
                     <Grid key={item.id} size={{ xs: 12, sm: 6, md: 3 }}>
@@ -63,7 +58,9 @@ const ShopPage: React.FC = () => {
                                     height="250"
                                     image={item.imageUrlThumbnail}
                                     alt={item.name}
+                                    loading="lazy"
                                     sx={{ p: 1, objectFit: 'contain' }}
+                                    
                                 />
                                 <CardContent sx={{ flexGrow: 1 }}>
                                     <Typography gutterBottom variant="h5" component="div" color="text.primary">

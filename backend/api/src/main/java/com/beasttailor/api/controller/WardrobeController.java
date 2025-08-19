@@ -42,14 +42,20 @@ public class WardrobeController {
     }
 
     @PostMapping("/items/{itemId}/equip")
-    public ResponseEntity<WardrobeItem> equipItem(@PathVariable Long itemId) {
-        WardrobeItem updatedItem = wardrobeService.setItemEquippedStatus(itemId, true);
+    public ResponseEntity<WardrobeItem> equipItem(
+            @PathVariable Long itemId,
+            @AuthenticationPrincipal UserDetails userDetails
+    ) {
+        WardrobeItem updatedItem = wardrobeService.setItemEquippedStatus(itemId, true, userDetails.getUsername());
         return ResponseEntity.ok(updatedItem);
     }
 
     @PostMapping("/items/{itemId}/unequip")
-    public ResponseEntity<WardrobeItem> unequipItem(@PathVariable Long itemId) {
-        WardrobeItem updatedItem = wardrobeService.setItemEquippedStatus(itemId, false);
+    public ResponseEntity<WardrobeItem> unequipItem(
+            @PathVariable Long itemId,
+            @AuthenticationPrincipal UserDetails userDetails
+    ) {
+        WardrobeItem updatedItem = wardrobeService.setItemEquippedStatus(itemId, false, userDetails.getUsername());
         return ResponseEntity.ok(updatedItem);
     }
 }

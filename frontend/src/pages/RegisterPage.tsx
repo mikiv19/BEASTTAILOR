@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import { Box, TextField, Button, Typography, Container, Alert } from '@mui/material';
-import axios, { isAxiosError } from 'axios';
+import apiClient from '../api/axiosConfig'; 
+import { isAxiosError } from 'axios'; 
 import { useNavigate } from 'react-router-dom';
-
 
 interface RegisterResponse {
     message: string;
 }
-
 
 interface ErrorResponse {
     message: string;
@@ -34,30 +33,26 @@ const RegisterPage: React.FC = () => {
         }
 
         try {
-            const response = await axios.post<RegisterResponse>('http://localhost:8080/api/auth/register', {
+            const response = await apiClient.post<RegisterResponse>('/api/auth/register', {
                 username: username,
                 password: password,
             });
 
             setSuccess(response.data.message || 'User registered successfully!');
             
-            // Clear the form fields
             setUsername('');
             setPassword('');
 
-            // Navigate to the login page after a short delay
             setTimeout(() => {
                 navigate('/login'); 
-            }, 2000);
+            }, 1000);
 
         } catch (err) {
             let errorMessage = "An unexpected error occurred.";
             if (isAxiosError<ErrorResponse>(err)) {
-
                 if (err.response) {
                     errorMessage = err.response.data.message || "An unknown error occurred during registration.";
                 } else if (err.request) {
-
                     errorMessage = "Network Error: The server is not responding.";
                 }
             }

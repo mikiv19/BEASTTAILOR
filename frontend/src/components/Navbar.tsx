@@ -61,6 +61,7 @@ const Navbar: React.FC = () => {
             <Box 
                 component="header"
                 sx={{
+                    maxWidth: '100vw',
                     display: 'flex',
                     alignItems: 'center',
                     height: '60px',
@@ -69,6 +70,7 @@ const Navbar: React.FC = () => {
                     zIndex: theme.zIndex.appBar,
                     paddingX: { xs: 2, md: 0 },
                     backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                    overflow: 'hidden',
                 }}
             >
                 <Box sx={{ 
@@ -81,16 +83,18 @@ const Navbar: React.FC = () => {
                     paddingRight: '48px',
                     backdropFilter: 'blur(10px)',
                     WebkitBackdropFilter: 'blur(10px)',
-                    flex: '0 0 20%',
+                    flex: '0 0 20vw',
                 }}>
                     <LeftNavShape />
-                    <Typography variant="h6" component={NavLink} to="/" sx={{ color: 'text.primary', textDecoration: 'none', fontWeight: 'bold', whiteSpace: 'nowrap' }}>
+                    <img 
+                        src="/logo_negative.svg" height={'45px'}></img>
+                    <Typography variant="h6" component={NavLink} to="/" sx={{ color: 'text.primary', textDecoration: 'none', fontWeight: 'bold', whiteSpace: 'nowrap', paddingLeft: '20px' }}>
                         BeastTailor
                     </Typography>
                 </Box>
 
                 <Box sx={{ 
-                    flex: '0 0 60%',
+                    flex: '0 0 60vw',
                     display: 'flex', 
                     justifyContent: 'center', 
                     height: '100%', 
@@ -116,7 +120,7 @@ const Navbar: React.FC = () => {
                     paddingRight: '24px',
                     backdropFilter: 'blur(10px)',
                     WebkitBackdropFilter: 'blur(10px)',
-                    flex: '0 0 20%',
+                    flex: '0 0 20vw',
                 }}>
                     <RightNavShape />
                     {isAuthenticated ? (

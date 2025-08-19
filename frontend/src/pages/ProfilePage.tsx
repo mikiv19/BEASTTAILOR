@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import axios from 'axios';
+import apiClient from '../api/axiosConfig'; 
 import Grid from '@mui/material/Grid'; 
 import { Container, Typography, Box, CircularProgress, Alert, Card, CardMedia, CardActions, Button, Divider, Paper } from '@mui/material';
 import { useAuth } from '../context/AuthContext';
@@ -29,9 +29,7 @@ const ProfilePage: React.FC = () => {
             try {
                 setError(null);
                 setLoading(true);
-                const response = await axios.get<Wardrobe>('http://localhost:8080/api/wardrobe', {
-                    withCredentials: true
-                });
+                const response = await apiClient.get<Wardrobe>('/api/wardrobe');
                 const allItems = response.data.items || [];
                 setWardrobeItems(allItems.filter(item => !item.equipped));
                 setEquippedItems(allItems.filter(item => item.equipped));
@@ -69,7 +67,7 @@ const ProfilePage: React.FC = () => {
     const handleEquip = async (itemToEquip: WardrobeItem) => {
         setError(null);
         try {
-            await axios.post(`http://localhost:8080/api/wardrobe/items/${itemToEquip.id}/equip`, {}, { withCredentials: true });
+            await apiClient.post(`/api/wardrobe/items/${itemToEquip.id}/equip`);
             setWardrobeItems(prev => prev.filter(item => item.id !== itemToEquip.id));
             setEquippedItems(prev => [...prev, { ...itemToEquip, equipped: true }]);
         } catch (err) {
@@ -80,7 +78,7 @@ const ProfilePage: React.FC = () => {
     const handleUnequip = async (itemToUnequip: WardrobeItem) => {
         setError(null);
         try {
-            await axios.post(`http://localhost:8080/api/wardrobe/items/${itemToUnequip.id}/unequip`, {}, { withCredentials: true });
+            await apiClient.post(`/api/wardrobe/items/${itemToUnequip.id}/unequip`);
             setEquippedItems(prev => prev.filter(item => item.id !== itemToUnequip.id));
             setWardrobeItems(prev => [...prev, { ...itemToUnequip, equipped: false }]);
         } catch (err) {
@@ -119,7 +117,6 @@ const ProfilePage: React.FC = () => {
                         </Box>
                     </Paper>
                 </Grid>
-
 
                 <Grid size={{ xs: 12, md: 8 }}>
                     <Box>

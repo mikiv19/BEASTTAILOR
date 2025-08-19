@@ -1,19 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, Link as RouterLink } from 'react-router-dom';
-import axios from 'axios';
-import { 
-    Container, 
-    Typography, 
-    Box, 
-    CircularProgress, 
-    Alert, 
-    Grid, 
-    Paper,
-    Button,
-    IconButton,
-    Stack,
-    Divider
-} from '@mui/material';
+import { useParams, Link as RouterLink, useNavigate } from 'react-router-dom';
+import apiClient from '../api/axiosConfig'; 
+import { Container, Typography, Box, CircularProgress, Alert, Grid, Paper,Button,IconButton,Stack,Divider} from '@mui/material';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { useAuth } from '../context/AuthContext';
 import { useLocalCart } from '../context/LocalCartContext';
@@ -21,6 +9,7 @@ import { useFavorite } from '../context/FavoriteContext';
 import type { ClothingItem } from '../types';
 
 const ItemDetailPage: React.FC = () => {
+    const navigate = useNavigate();
     const { id } = useParams<{ id: string }>();
     
     const { isAuthenticated } = useAuth();
@@ -36,10 +25,13 @@ const ItemDetailPage: React.FC = () => {
         const fetchItem = async () => {
             try {
                 setLoading(true);
-                const response = await axios.get<ClothingItem>(`http://localhost:8080/api/items/${id}`);
+                const response = await apiClient.get<ClothingItem>(`/api/items/${id}`);
                 setItem(response.data);
             } catch (err) {
                 setError(`Failed to find item with ID ${id}. It may have been sold!`);
+                setTimeout(() => {
+                        navigate('/');
+                    }, 3000);
             } finally {
                 setLoading(false);
             }

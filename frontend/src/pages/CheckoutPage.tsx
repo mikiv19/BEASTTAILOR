@@ -2,10 +2,9 @@ import React, { useState } from 'react';
 import { Container, Typography, Button, List, ListItem, ListItemText, Box, Paper, Divider, CircularProgress, Alert } from '@mui/material';
 import { useLocalCart } from '../context/LocalCartContext';
 import { useAuth } from '../context/AuthContext';
-import axios from 'axios';
+import apiClient from '../api/axiosConfig';
 import { useNavigate } from 'react-router-dom';
 
-// This interface defines the shape of the data we expect back from the haggle API
 interface HaggleResult {
     itemId: number;
     itemName: string;
@@ -20,28 +19,23 @@ const CheckoutPage: React.FC = () => {
     const { cartItems, clearCart } = useLocalCart();
     const { isAuthenticated } = useAuth();
     const navigate = useNavigate();
-
-    // New state for the haggle feature
+    
     const [haggleResults, setHaggleResults] = useState<HaggleResult[]>([]);
     const [isHaggling, setIsHaggling] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
-    // Calculate base price before haggling
     const baseTotalPrice = cartItems.reduce((total, item) => total + item.basePrice * item.quantity, 0);
 
     const handleHaggle = async () => {
         setError(null);
         setIsHaggling(true);
         try {
-            // Convert cart items to the DTO format the backend expects
             const cartForApi = cartItems.map(item => ({ 
                 itemId: item.id, 
                 quantity: item.quantity 
             }));
             
-            const response = await axios.post<HaggleResult[]>('http://localhost:8080/api/checkout/haggle', cartForApi, {
-                withCredentials: true,
-            });
+            const response = await apiClient.post<HaggleResult[]>('/api/checkout/haggle', cartForApi);
             setHaggleResults(response.data);
         } catch (err) {
             setError("The haggle failed. The shopkeeper is unimpressed.");
@@ -60,9 +54,7 @@ const CheckoutPage: React.FC = () => {
         
         try {
             const itemIds = cartItems.map(item => item.id);
-            await axios.post('http://localhost:8080/api/wardrobe/purchase', itemIds, {
-                withCredentials: true,
-            });
+            await apiClient.post('/api/wardrobe/purchase', itemIds);
             alert("Purchase successful! Items have been added to your wardrobe.");
             clearCart();
             navigate('/profile');

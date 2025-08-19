@@ -1,5 +1,5 @@
 import React from 'react';
-import { Drawer, Box, Typography, List, ListItem, ListItemText, Button, Divider, IconButton } from '@mui/material';
+import { Drawer, Box, Typography, List, ListItem, ListItemText, Divider, IconButton } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useFavorite } from '../context/FavoriteContext';
 
