@@ -1,9 +1,10 @@
 package com.beasttailor.api.config;
-import com.beasttailor.api.model.ClothingItem;
-import com.beasttailor.api.repository.ClothingItemRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.beasttailor.api.model.ClothingItem;
+import com.beasttailor.api.repository.ClothingItemRepository;
 
 @Component
 public class DataSeeder implements CommandLineRunner {
@@ -98,5 +99,73 @@ public class DataSeeder implements CommandLineRunner {
         gnomeGoggles.setIntBonus(1);
         gnomeGoggles.setSpecialProperties("+2 to Arcana checks");
         clothingItemRepository.save(gnomeGoggles);
+
+                ClothingItem sunstoneRegalia = new ClothingItem(
+            "Regalia of the Sunstone King",
+            "Armor reserved for the highest echelons of the royal guard. The golden pauldrons are shaped like solar flares, and the cloak is woven from solidified sunbeams.",
+            "Sected",
+            850.00,
+            "CHEST",
+            "https://cdna.artstation.com/p/assets/images/images/072/815/886/large/zahra-rezaei-zahra-rezaei-v-2.jpg?1708342263",
+            "https://cdna.artstation.com/p/assets/images/images/072/815/886/large/zahra-rezaei-zahra-rezaei-v-2.jpg?1708342263"
+        );
+        sunstoneRegalia.setStrBonus(1);
+        sunstoneRegalia.setConBonus(2);
+        sunstoneRegalia.setWisBonus(1);
+        sunstoneRegalia.setChaBonus(2);
+        sunstoneRegalia.setAcBonus(2);
+        sunstoneRegalia.setSpecialProperties("Allies within 10ft gain advantage on saves vs. fear");
+        clothingItemRepository.save(sunstoneRegalia);
+
+        // --- Sected (Noble-Born) ---
+        ClothingItem priestessVestments = new ClothingItem(
+            "War-Priestess's Vestments",
+            "A fusion of practicality and station. The embossed leather cuirass provides vital protection, while the flowing azure dress and red cloak signify rank and conviction.",
+            "Sected",
+            550.00,
+            "CHEST",
+            "https://cdnb.artstation.com/p/assets/images/images/090/809/543/large/zahra-3d-1.jpg?1754976816", 
+            "https://cdnb.artstation.com/p/assets/images/images/090/809/543/large/zahra-3d-1.jpg?1754976816"
+        );
+        priestessVestments.setStrBonus(1);
+        priestessVestments.setConBonus(1);
+        priestessVestments.setWisBonus(1);
+        priestessVestments.setChaBonus(1);
+        priestessVestments.setAcBonus(2);
+        priestessVestments.setSpecialProperties("Grants allies within 10ft a +1 bonus to saves");
+        clothingItemRepository.save(priestessVestments);
+            
+        // --- ONYX (Drow-Spun) ---
+        ClothingItem twilightRobes = new ClothingItem(
+            "Robes of the Twilight Orchid",
+            "Woven from silks that shift in color from blood-red to deepest night. The silver embroidery depicts orchids that only bloom in moonless caverns.",
+            "ONYX",
+            480.00,
+            "CHEST",
+            "https://cdna.artstation.com/p/assets/images/images/057/657/478/large/shiva-004.jpg?1672272318",
+            "https://cdna.artstation.com/p/assets/images/images/057/657/478/large/shiva-004.jpg?1672272318"
+        );
+        twilightRobes.setDexBonus(1);
+        twilightRobes.setIntBonus(2);
+        twilightRobes.setChaBonus(2);
+        twilightRobes.setAcBonus(1);
+        twilightRobes.setSpecialProperties("Grants Advantage on Charisma (Deception) checks");
+        clothingItemRepository.save(twilightRobes);
+            
+        // --- Fayr Moda (Elven-Woven) ---
+        ClothingItem wayfarerDress = new ClothingItem(
+            "Wayfarer's Field Dress",
+            "A practical yet elegant dress of durable homespun linen and wool. The corset provides support for long journeys, and the hooded capelet offers protection from sudden showers.",
+            "Fayr Moda",
+            85.00,
+            "CHEST",
+            "https://cdnb.artstation.com/p/assets/images/images/068/425/525/large/shiva-0.jpg?1697760071",
+            "https://cdnb.artstation.com/p/assets/images/images/068/425/525/large/shiva-0.jpg?1697760071"
+        );
+        wayfarerDress.setDexBonus(1);
+        wayfarerDress.setConBonus(1);
+        wayfarerDress.setWisBonus(1);
+        wayfarerDress.setSpecialProperties("Grants Advantage on Constitution saves vs. exhaustion");
+        clothingItemRepository.save(wayfarerDress);
     }
 }

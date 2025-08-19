@@ -1,7 +1,17 @@
 import React, { useState } from 'react';
 import { Box, TextField, Button, Typography, Container, Alert } from '@mui/material';
-import axios from 'axios';
+import axios, { isAxiosError } from 'axios';
 import { useNavigate } from 'react-router-dom';
+
+
+interface RegisterResponse {
+    message: string;
+}
+
+
+interface ErrorResponse {
+    message: string;
+}
 
 const RegisterPage: React.FC = () => {
     const [username, setUsername] = useState('');
@@ -24,30 +34,34 @@ const RegisterPage: React.FC = () => {
         }
 
         try {
-            const response = await axios.post('http://localhost:8080/api/auth/register', {
+            const response = await axios.post<RegisterResponse>('http://localhost:8080/api/auth/register', {
                 username: username,
                 password: password,
             });
 
-            // Handle success
             setSuccess(response.data.message || 'User registered successfully!');
             
-            
+            // Clear the form fields
             setUsername('');
             setPassword('');
 
-            // Navigate to the login page
+            // Navigate to the login page after a short delay
             setTimeout(() => {
-                navigate('/'); 
+                navigate('/login'); 
             }, 2000);
 
-        } catch (err: any) {
-            // Handle errors from the API
-            if (axios.isAxiosError(err) && err.response) {
-                setError(err.response.data || "An unexpected error occurred.");
-            } else {
-                setError("Network Error or server is not responding.");
+        } catch (err) {
+            let errorMessage = "An unexpected error occurred.";
+            if (isAxiosError<ErrorResponse>(err)) {
+
+                if (err.response) {
+                    errorMessage = err.response.data.message || "An unknown error occurred during registration.";
+                } else if (err.request) {
+
+                    errorMessage = "Network Error: The server is not responding.";
+                }
             }
+            setError(errorMessage);
         }
     };
 
