@@ -6,7 +6,7 @@ import { useAuth } from '../context/AuthContext';
 import { useLocalCart } from '../context/LocalCartContext';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCartOutlined';
 import axios from 'axios';
 
 import CartDrawer from './CartDrawer';

@@ -3,7 +3,6 @@ import React, { createContext, useState, useContext,type ReactNode } from 'react
 
 interface User {
     username: string;
-    // Add more user details here later, like roles or ID
 }
 
 
@@ -27,7 +26,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     // Clear state on logout
     const logout = () => {
         setUser(null);
-        // meaby call backend /logout endpoint here (need to implement)
     };
 
     //check if the user is logged in

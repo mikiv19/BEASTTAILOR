@@ -49,10 +49,15 @@ const ShopPage: React.FC = () => {
         <Container sx={{ mt: 4, mb: 4 }}>
             <Grid container spacing={4} sx={{ mt: 2 }}>
                 {items.map((item) => (
-                    
                     <Grid key={item.id} size={{ xs: 12, sm: 6, md: 3 }}>
-                        <Link to={`/item/${item.id}`} style={{ textDecoration: 'none' }}>
-                            <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column', transition: 'transform 0.2s', '&:hover': { transform: 'scale(1.03)' } }}>
+                        <Link to={`/item/${item.id}`} style={{ textDecoration: 'none', height: '100%', display: 'block' }}>
+                            <Card sx={{ 
+                                height: '100%', 
+                                display: 'flex', 
+                                flexDirection: 'column', 
+                                transition: 'transform 0.2s', 
+                                '&:hover': { transform: 'scale(1.03)' } 
+                            }}>
                                 <CardMedia
                                     component="img"
                                     height="250"
@@ -60,15 +65,21 @@ const ShopPage: React.FC = () => {
                                     alt={item.name}
                                     loading="lazy"
                                     sx={{ p: 1, objectFit: 'contain' }}
-                                    
                                 />
-                                <CardContent sx={{ flexGrow: 1 }}>
+                                <CardContent sx={{ 
+                                    display: 'flex', 
+                                    flexDirection: 'column', 
+                                    flexGrow: 1
+                                }}>
                                     <Typography gutterBottom variant="h5" component="div" color="text.primary">
                                         {item.name}
                                     </Typography>
-                                    <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+
+                                    <Box sx={{ flexGrow: 1 }} /> 
+                                    <Typography variant="body2" color="text.secondary">
                                         {item.brand}
                                     </Typography>
+                                    
                                     <Typography variant="h6" component="p" color="text.primary">
                                         {item.basePrice.toFixed(2)} GP
                                     </Typography>

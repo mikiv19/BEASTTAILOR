@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, type ReactNode } from 'react';
-import axios from 'axios';
+import apiClient from '../api/axiosConfig';
 import type { ClothingItem } from '../types';
 import { useAuth } from './AuthContext';
 
@@ -38,7 +38,7 @@ export const FavoriteProvider: React.FC<{ children: ReactNode }> = ({ children }
         }
         try {
             setLoading(true);
-            const response = await axios.get<FavoritesListResponse>('http://localhost:8080/api/favorites');
+            const response = await apiClient.get<FavoritesListResponse>('/api/favorites');
             setFavoriteItems(response.data.items || []);
         } catch (error) {
             console.error("Failed to fetch favorites:", error);
@@ -58,8 +58,8 @@ export const FavoriteProvider: React.FC<{ children: ReactNode }> = ({ children }
             return;
         }
         try {
-            const response = await axios.post<FavoritesListResponse>(
-                'http://localhost:8080/api/favorites/items', 
+            const response = await apiClient.post<FavoritesListResponse>(
+                '/api/favorites/items', 
                 { itemId: item.id, quantity }
             );
             setFavoriteItems(response.data.items || []);
@@ -75,8 +75,8 @@ export const FavoriteProvider: React.FC<{ children: ReactNode }> = ({ children }
             return;
         }
         try {
-            const response = await axios.delete<FavoritesListResponse>(
-                `http://localhost:8080/api/favorites/items/${favoriteItemId}`
+            const response = await apiClient.delete<FavoritesListResponse>(
+                `/api/favorites/items/${favoriteItemId}`
             );
             setFavoriteItems(response.data.items || []);
         } catch (error) {

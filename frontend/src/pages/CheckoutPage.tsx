@@ -97,9 +97,9 @@ const CheckoutPage: React.FC = () => {
                                         <Typography variant="body1">
                                             {result ? 
                                                 <>
-                                                    <span style={{ textDecoration: 'line-through', marginRight: '8px' }}>
+                                                    <Box component="span" sx={{ textDecoration: 'line-through', mr: 1 }}>
                                                         {item.basePrice.toFixed(2)} GP
-                                                    </span>
+                                                    </Box>
                                                     <strong>{result.finalPrice.toFixed(2)} GP</strong>
                                                 </>
                                                 : `${item.basePrice.toFixed(2)} GP`

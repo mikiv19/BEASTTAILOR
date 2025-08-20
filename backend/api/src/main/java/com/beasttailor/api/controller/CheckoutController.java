@@ -14,6 +14,8 @@ import com.beasttailor.api.dto.CartItemDto;
 import com.beasttailor.api.dto.HaggleResultDto;
 import com.beasttailor.api.service.CheckoutService;
 
+
+//Controller for handling checkout-related API requests
 @RestController
 @RequestMapping("/api/checkout")
 public class CheckoutController {
@@ -23,6 +25,7 @@ public class CheckoutController {
     public CheckoutController(CheckoutService checkoutService) {
         this.checkoutService = checkoutService;
     }
+
 
     @PostMapping("/haggle")
     public ResponseEntity<List<HaggleResultDto>> haggleForPrices(

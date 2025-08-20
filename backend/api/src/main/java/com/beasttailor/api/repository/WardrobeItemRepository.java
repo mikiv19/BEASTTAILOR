@@ -7,5 +7,5 @@ import com.beasttailor.api.model.WardrobeItem;
 
 @Repository
 public interface WardrobeItemRepository extends JpaRepository<WardrobeItem, Long> {
-    // Additional query methods can be defined here if needed.
+
 }

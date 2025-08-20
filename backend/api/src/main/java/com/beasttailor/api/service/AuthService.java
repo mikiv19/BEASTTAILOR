@@ -44,12 +44,10 @@ public class AuthService {
         
         User savedUser = userRepository.save(newUser);
 
-        // Create an empty favorites list for the new user
         FavoritesList newFavoritesList = new FavoritesList();
         newFavoritesList.setUser(savedUser);
         favoritesListRepository.save(newFavoritesList);
 
-        // Automatically create an empty wardrobe for the new user
         Wardrobe newWardrobe = new Wardrobe();
         newWardrobe.setUser(savedUser);
         wardrobeRepository.save(newWardrobe);
